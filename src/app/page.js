@@ -10,13 +10,11 @@ export default function Home() {
   const createUser=useMutation(api.user.createUser);
 
   const checkUser=async ()=>{
-    const result=await createUser({
+    await createUser({
       email:user?.primaryEmailAddress?.emailAddress,
       userName:user?.fullName,
       imageUrl:user?.imageUrl
     });
-
-    console.log(result)
   }
 
   useEffect(()=>{
