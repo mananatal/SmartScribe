@@ -15,9 +15,9 @@ import {
 } from "@/components/ui/sidebar"
 import { Progress } from "@/components/ui/progress"
 
-import { LayoutPanelLeft, Plus, ShieldEllipsis,BadgeCheck } from "lucide-react";
+import { LayoutPanelLeft, Plus, Sparkles,BadgeCheck } from "lucide-react";
 import { NavUser } from "./NavUser";
-import { useUser } from "@clerk/nextjs";
+
 
 function AppSidebar() {
     const items = [
@@ -34,7 +34,7 @@ function AppSidebar() {
       {
         title: "Upgrade plan",
         url: "/dashboard/upgrade",
-        icon: ShieldEllipsis,
+        icon: Sparkles,
       },
     ];
 
