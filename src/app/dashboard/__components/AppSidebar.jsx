@@ -15,7 +15,9 @@ import {
 } from "@/components/ui/sidebar"
 import { Progress } from "@/components/ui/progress"
 
-import { LayoutPanelLeft, Plus, ShieldEllipsis } from "lucide-react";
+import { LayoutPanelLeft, Plus, ShieldEllipsis,BadgeCheck } from "lucide-react";
+import { NavUser } from "./NavUser";
+import { useUser } from "@clerk/nextjs";
 
 function AppSidebar() {
     const items = [
@@ -25,11 +27,16 @@ function AppSidebar() {
         icon: LayoutPanelLeft,
       },
       {
+        title: "Account",
+        url: "/dashboard/user-profile",
+        icon: BadgeCheck,
+      },
+      {
         title: "Upgrade plan",
         url: "/dashboard/upgrade",
         icon: ShieldEllipsis,
       },
-    ]
+    ];
 
     return (
       <Sidebar>
@@ -60,10 +67,11 @@ function AppSidebar() {
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
-        <SidebarFooter className={"mb-12"}>
+        <SidebarFooter className={"mb-8"}>
           <Progress value={33} />
           <div className="ml-1 font-semibold text-sm">2 out of 5 PDF uploaded</div>
-          <div className="ml-1 opacity-80 text-sm">Upgrade to Upload more PDF</div>
+          <div className="ml-1 opacity-80 text-sm mb-4">Upgrade to Upload more PDF</div>
+          <NavUser/>
         </SidebarFooter>
       </Sidebar>
     )
