@@ -17,6 +17,7 @@ import { Progress } from "@/components/ui/progress"
 
 import { LayoutPanelLeft, Plus, Sparkles,BadgeCheck } from "lucide-react";
 import { NavUser } from "./NavUser";
+import UploadPdf from "./UploadPdf";
 
 
 function AppSidebar() {
@@ -43,10 +44,12 @@ function AppSidebar() {
         <SidebarHeader className={"mt-4"}>
           <Logo/>
           <Separator/>
-          <Button className={"mt-2"}>
-            <Plus/>
-            Upload
-          </Button>
+          <UploadPdf>
+            <Button className={"mt-2"}>
+              <Plus/>
+              Upload
+            </Button>
+          </UploadPdf>
         </SidebarHeader>
         <SidebarContent>
           <SidebarGroup>
