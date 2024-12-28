@@ -1,5 +1,5 @@
 'use client'
-import React, {  useRef, useState } from 'react'
+import React, {  useEffect, useRef, useState } from 'react'
 import {
     Dialog,
     DialogClose,
@@ -12,10 +12,11 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Loader2Icon } from 'lucide-react'
-import { useMutation } from "convex/react";
+import { useAction, useMutation } from "convex/react";
 import { api } from '../../../../convex/_generated/api'
 import { useUser } from '@clerk/nextjs'
 import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios'
 
 
 function UploadPdf({ children }) {
@@ -24,11 +25,14 @@ function UploadPdf({ children }) {
     const [fileName,setFileName]=useState("");
     const [file,setFile]=useState(null);
     const inputRef=useRef(null);
+    const [open,setOpen]=useState(false);
+
     const {user}=useUser();
 
     const generateUploadUrl = useMutation(api.fileStorage.generateUploadUrl);
     const getFileUrl=useMutation(api.fileStorage.getFileUrl);
-    const uploadFileToDb=useMutation(api.fileStorage.uploadFileToDb)
+    const uploadFileToDb=useMutation(api.fileStorage.uploadFileToDb);
+    const embedDocument=useAction(api.myActions.ingest);
 
     const onFileSelect=()=>{
         const file=inputRef.current.files[0];
@@ -42,6 +46,10 @@ function UploadPdf({ children }) {
         setFile(null);
         setFileName("");
     }
+
+    useEffect(()=>{
+        onDialogClose();
+    },[open])
 
 
     const onUpload=async ()=>{
@@ -58,14 +66,27 @@ function UploadPdf({ children }) {
             const { storageId } = await result.json();
             // Step 3: Save the newly allocated storage id to the database
             const fileUrl=await getFileUrl({storageId});
-            const res=await uploadFileToDb({
-                fileId:uuidv4(),
+            const fileId=uuidv4()
+            await uploadFileToDb({
+                fileId,
                 fileName:fileName==""?"Untitled":fileName,
                 storageId,
                 fileUrl,
                 createdBy:user?.primaryEmailAddress?.emailAddress,
             });
 
+            const response = await axios.get("/api/pdf-loader?pdfUrl=" + fileUrl);
+
+            if(!response){
+                throw new Error("Error while fetching splitted text");
+            }
+
+            await embedDocument({
+                fileId,
+                splittedText:response?.data.result
+            });
+            
+            setOpen(false);
             setFile(null);
             setFileName("");
         } catch (error) {
@@ -79,7 +100,7 @@ function UploadPdf({ children }) {
 
 
     return (
-        <Dialog onOpenChange={onDialogClose}>
+        <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>{children}</DialogTrigger>
             <DialogContent>
                 <DialogHeader>
