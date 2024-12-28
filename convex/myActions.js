@@ -4,8 +4,6 @@ import { action } from "./_generated/server.js";
 import { v } from "convex/values";
 import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
 import { TaskType } from "@google/generative-ai";
-import { geminiApiKey } from "@/app/dashboard/__components/gemenikey.js";
-
 
 
 export const ingest = action({
@@ -14,7 +12,6 @@ export const ingest = action({
     splittedText:v.array(v.string())
   },
   handler: async (ctx,args) => {
-    console.log("APITKEY: ",geminiApiKey)
     await ConvexVectorStore.fromTexts(
       args.splittedText,
       {fileId:args.fileId},
@@ -22,7 +19,7 @@ export const ingest = action({
         model: "text-embedding-004", // 768 dimensions
         taskType: TaskType.RETRIEVAL_DOCUMENT,
         title: "Document title",
-        apiKey:process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
+
       }),
       { ctx }
     );
@@ -39,7 +36,7 @@ export const search = action({
             model: "text-embedding-004", // 768 dimensions
             taskType: TaskType.RETRIEVAL_DOCUMENT,
             title: "Document title",
-            apiKey:process.env.NEXT_PUBLIC_GOOGLE_API_KEY
+
       }), { ctx });
   
       const resultOne = await vectorStore.similaritySearch(args.query, 1);
