@@ -4,8 +4,7 @@ import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { useUser } from "@clerk/nextjs";
 import { useEffect } from "react";
-import { motion } from "framer-motion";
-
+import {motion} from "framer-motion"
 export default function Home() {
   const { user } = useUser();
   const createUser = useMutation(api.user.createUser);
