@@ -38,8 +38,8 @@ export const search = action({
             title: "Document title",
 
       }), { ctx });
-  
-      const resultOne = await vectorStore.similaritySearch(args.query, 1);
-      console.log(resultOne);
+
+      const resultOne =  (await vectorStore.similaritySearch(args.query, 1)).filter((q) => q.metadata.fileId == args.fileId);
+      return JSON.stringify(resultOne);
     },
 });
