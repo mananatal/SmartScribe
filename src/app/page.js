@@ -5,6 +5,9 @@ import { api } from "../../convex/_generated/api";
 import { useUser } from "@clerk/nextjs";
 import { useEffect } from "react";
 import {motion} from "framer-motion"
+import { AnimatedTestimonials } from "@/components/ui/animated-testimonials";
+import testimonials from "../components/ui/data/testimonials.json"
+
 export default function Home() {
   const { user } = useUser();
   const createUser = useMutation(api.user.createUser);
@@ -127,6 +130,12 @@ export default function Home() {
             ))}
           </motion.div>
         </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section id="testimonials" className="py-16 bg-gray-50">
+        <h3 className="text-center text-3xl font-bold mb-8">✨ What Our Users Say</h3>
+        <AnimatedTestimonials testimonials={testimonials} autoplay />
       </section>
 
       {/* About Section */}

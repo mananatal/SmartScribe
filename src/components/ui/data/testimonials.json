@@ -1,0 +1,20 @@
+[
+  {
+    "src": "https://picsum.photos/500/500?random=1",
+    "name": "John Doe",
+    "designation": "Software Engineer at TechCorp",
+    "quote": "SmartScribe revolutionized how I interact with documents. It's truly a game-changer!"
+  },
+  {
+    "src": "https://picsum.photos/500/500?random=2",
+    "name": "Jane Smith",
+    "designation": "Content Creator at MediaFlow",
+    "quote": "The AI-powered features are incredible. Extracting and organizing notes has never been easier!"
+  },
+  {
+    "src": "https://picsum.photos/500/500?random=3",
+    "name": "Alice Johnson",
+    "designation": "Researcher at Innovate Labs",
+    "quote": "A seamless and user-friendly experience. SmartScribe is a must-have tool!"
+  }
+]
