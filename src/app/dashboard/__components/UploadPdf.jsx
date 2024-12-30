@@ -17,6 +17,7 @@ import { api } from '../../../../convex/_generated/api'
 import { useUser } from '@clerk/nextjs'
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios'
+import { useRouter } from 'next/navigation'
 
 
 function UploadPdf({ children }) {
@@ -26,6 +27,8 @@ function UploadPdf({ children }) {
     const [file,setFile]=useState(null);
     const inputRef=useRef(null);
     const [open,setOpen]=useState(false);
+
+    const router=useRouter();
 
     const {user}=useUser();
 
@@ -89,6 +92,7 @@ function UploadPdf({ children }) {
             setOpen(false);
             setFile(null);
             setFileName("");
+            router.push(`/workspace/${fileId}`);
         } catch (error) {
             console.log("Error while uploading pdf file: ",error)
         }

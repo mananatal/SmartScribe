@@ -5,7 +5,7 @@ import { v } from "convex/values";
 import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
 import { TaskType } from "@google/generative-ai";
 
-
+const apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
 export const ingest = action({
   args: {
     fileId:v.string(),
@@ -19,7 +19,7 @@ export const ingest = action({
         model: "text-embedding-004", // 768 dimensions
         taskType: TaskType.RETRIEVAL_DOCUMENT,
         title: "Document title",
-
+        apiKey:apiKey,
       }),
       { ctx }
     );
@@ -36,7 +36,7 @@ export const search = action({
             model: "text-embedding-004", // 768 dimensions
             taskType: TaskType.RETRIEVAL_DOCUMENT,
             title: "Document title",
-
+            apiKey:apiKey,
       }), { ctx });
 
       const resultOne =  (await vectorStore.similaritySearch(args.query, 1)).filter((q) => q.metadata.fileId == args.fileId);

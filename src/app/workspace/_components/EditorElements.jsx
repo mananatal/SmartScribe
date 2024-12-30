@@ -52,7 +52,6 @@ function EditorElements({editor}) {
         
         const editorText=editor.getHTML();
         const ans=answer.response.text().replace('```html','').replace('```','');
-        console.log(ans)
         editor.commands.setContent(editorText + "<strong>Answer:</strong>" + ans);
     }
 
