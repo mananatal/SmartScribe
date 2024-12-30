@@ -1,7 +1,5 @@
 "use client"
-import { useQuery } from 'convex/react'
 import React from 'react'
-import { api } from '../../../../convex/_generated/api'
 import { Loader2Icon } from 'lucide-react';
 
 function PdfViewer({fileUrl}) {

@@ -1,11 +1,9 @@
 "use client"
 import {
     BadgeCheck,
-    Bell,
     ChevronsUpDown,
     CreditCard,
     LogOut,
-    Sparkles,
 } from "lucide-react"
 import {
     Avatar,
@@ -79,7 +77,7 @@ export function NavUser() {
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
                             <DropdownMenuItem onClick={()=>router.push("/dashboard/upgrade")}> 
-                                <Sparkles />
+                                <CreditCard />
                                 Upgrade to Pro
                             </DropdownMenuItem>
                         </DropdownMenuGroup>

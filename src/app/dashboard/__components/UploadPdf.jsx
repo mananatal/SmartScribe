@@ -20,7 +20,7 @@ import axios from 'axios'
 import { useRouter } from 'next/navigation'
 
 
-function UploadPdf({ children }) {
+function UploadPdf({ children,isUploadLimitReached }) {
 
     const [loading,setLoading]=useState(false);
     const [fileName,setFileName]=useState("");
@@ -36,6 +36,7 @@ function UploadPdf({ children }) {
     const getFileUrl=useMutation(api.fileStorage.getFileUrl);
     const uploadFileToDb=useMutation(api.fileStorage.uploadFileToDb);
     const embedDocument=useAction(api.myActions.ingest);
+
 
     const onFileSelect=()=>{
         const file=inputRef.current.files[0];
@@ -102,10 +103,9 @@ function UploadPdf({ children }) {
 
     }
 
-
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>{children}</DialogTrigger>
+            <DialogTrigger disabled={isUploadLimitReached} asChild>{children}</DialogTrigger>
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle className="text-base sm:text-lg md:text-xl">Upload PDF</DialogTitle>
@@ -144,7 +144,7 @@ function UploadPdf({ children }) {
                             </DialogClose>
                             <Button
                                 onClick={onUpload}
-                                disabled={loading}
+                                disabled={loading }
                                 className="bg-blue-500 hover:bg-blue-400 text-xs sm:text-sm px-2 sm:px-3 py-1 h-7 sm:h-8"
                             >
                                 {loading ? (

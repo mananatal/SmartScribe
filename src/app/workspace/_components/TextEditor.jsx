@@ -34,19 +34,19 @@ function TextEditor({fileId}) {
     }, [editor && savedNotes]);
 
     useEffect(() => {
-        if(!user){
+        if (!user) {
             return;
         }
-        const getData = setTimeout(() => {
+        const saveData = setTimeout(() => {
             saveNotes({
                 fileId,
-                notes:editor?.getHTML(),
-                createdBy:user?.primaryEmailAddress?.emailAddress
-            })
-        }, 900)
-      
-        return () => clearTimeout(getData)
-        
+                notes: editor?.getHTML(),
+                createdBy: user?.primaryEmailAddress?.emailAddress
+            });
+        }, 900);
+
+        return () => clearTimeout(saveData);
+
     }, [editor && editor.getText()]);
    
     if(!editor){
