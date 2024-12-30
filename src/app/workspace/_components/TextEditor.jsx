@@ -1,11 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Placeholder from '@tiptap/extension-placeholder'
 import EditorElements from './EditorElements'
 import Highlight from '@tiptap/extension-highlight'
+import { useMutation, useQuery } from 'convex/react'
+import { api } from '../../../../convex/_generated/api'
+import { useUser } from '@clerk/nextjs'
 
-function TextEditor() {
+function TextEditor({fileId}) {
+
+    const savedNotes=useQuery(api.notes.getNotes,{fileId});
+    const saveNotes=useMutation(api.notes.saveNotes);
+    const {user}=useUser();
 
     const editor = useEditor({
         extensions: [
@@ -22,9 +29,30 @@ function TextEditor() {
         },
     });
 
+    useEffect(() => {
+        editor?.commands.setContent(savedNotes);
+    }, [editor && savedNotes]);
+
+    useEffect(() => {
+        if(!user){
+            return;
+        }
+        const getData = setTimeout(() => {
+            saveNotes({
+                fileId,
+                notes:editor?.getHTML(),
+                createdBy:user?.primaryEmailAddress?.emailAddress
+            })
+        }, 900)
+      
+        return () => clearTimeout(getData)
+        
+    }, [editor && editor.getText()]);
+   
     if(!editor){
         return null;
     }
+    
 
     return (
         <div className="scrollbar-hide">

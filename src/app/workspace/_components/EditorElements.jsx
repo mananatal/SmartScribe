@@ -11,11 +11,12 @@ import {
     Sparkles,
     Strikethrough,
   } from "lucide-react";
-import { useAction } from 'convex/react';
+import { useAction, useMutation } from 'convex/react';
 import { api } from '../../../../convex/_generated/api';
 import { useParams } from 'next/navigation';
 import { chatSession } from '@/config/gemeni';
 import { toast } from "sonner"
+import { useUser } from '@clerk/nextjs';
 
 function EditorElements({editor}) {
     if (!editor) {
@@ -23,7 +24,10 @@ function EditorElements({editor}) {
     }
 
     const searchVectors=useAction(api.myActions.search);
+    const saveNotes=useMutation(api.notes.saveNotes);
+
     const {fileId}=useParams(); 
+    const {user}=useUser();
 
     const onAIAssist=async ()=>{
         toast("Please wait while AI is generating response");
@@ -53,6 +57,13 @@ function EditorElements({editor}) {
         const editorText=editor.getHTML();
         const ans=answer.response.text().replace('```html','').replace('```','');
         editor.commands.setContent(editorText + "<strong>Answer:</strong>" + ans);
+
+        await saveNotes({
+            fileId,
+            notes:editor.getHTML(),
+            createdBy:user?.primaryEmailAddress?.emailAddress
+        })
+        
     }
 
 

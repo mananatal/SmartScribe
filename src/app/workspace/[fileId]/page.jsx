@@ -17,7 +17,7 @@ function WorkspacePage({params}) {
         <WorkspaceHeader fileName={fileInfo && fileInfo[0].fileName}/>
         <div className='grid grid-cols-2 gap-2'>
             <div>
-                <TextEditor />
+                <TextEditor fileId={fileId}/>
             </div>
             <div>
                 <PdfViewer fileUrl={fileInfo && fileInfo[0].fileUrl}/>
