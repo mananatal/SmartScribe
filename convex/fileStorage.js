@@ -56,7 +56,7 @@ export const getFileInfo=query({
 
 export const getUserPdf= query({
     args: {
-      email: v.string(),
+      email: v.optional(v.string()),
     },
     handler: async (ctx, args) => {
       if (!args.email) return;
