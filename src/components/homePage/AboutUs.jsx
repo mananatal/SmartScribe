@@ -1,42 +1,39 @@
 import { cn } from "@/lib/utils";
-import {
-    IconBulb,
-    IconWorld,
-    IconTools,
-    IconRocket,
-} from "@tabler/icons-react";
+import { IconEye, IconHeart, IconTarget, IconUsers } from "@tabler/icons-react";
+
 
 export function AboutUs() {
-    const features = [
+    const aboutUsFeatures = [
         {
-          title: "Why Choose SmartScribe?",
+          title: "Our Vision",
           description:
-            "Simplifies your workflow with state-of-the-art AI algorithms to extract key insights and stay organized effortlessly.",
-          icon: <IconBulb />,
+            "Empowering users with AI-driven tools to simplify complex tasks and enhance productivity. Our vision is to make knowledge management smarter and more efficient.",
+          icon: <IconEye />,
         },
         {
-          title: "Seamless Integration",
+          title: "Our Mission",
           description:
-            "Integrates with popular file formats and cloud platforms, making it perfect for both students and professionals.",
-          icon: <IconWorld />,
+            "To deliver cutting-edge AI solutions that help students, professionals, and organizations manage, process, and interact with information effortlessly.",
+          icon: <IconTarget />,
         },
         {
-          title: "Built for Flexibility",
+          title: "Team of Innovators",
           description:
-            "User-friendly interface and advanced filters for personalized note management.",
-          icon: <IconTools />,
+            "A diverse group of thinkers and builders passionate about creating smart solutions for real-world challenges.",
+          icon: <IconUsers />,
         },
         {
-          title: "Innovation at Its Core",
+          title: "Customer-Centric Approach",
           description:
-            "Features vector-based search and real-time updates to keep you ahead in productivity.",
-          icon: <IconRocket />,
+            "We prioritize our users by designing intuitive tools, providing timely support, and constantly evolving to meet their needs.",
+          icon: <IconHeart />,
         },
       ];
       
+      
   return (
     <>
-    <div className="py-8">
+    <div id="about" className="py-8 ">
         <h4 className="text-3xl lg:text-5xl lg:leading-tight max-w-5xl mx-auto text-center tracking-tight font-medium text-black dark:text-white">
             About Us
         </h4>
@@ -47,7 +44,7 @@ export function AboutUs() {
     </div>
     (<div
       className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  relative z-10 py-6 max-w-7xl mx-auto">
-      {features.map((feature, index) => (
+      {aboutUsFeatures.map((feature, index) => (
         <Feature key={feature.title} {...feature} index={index} />
       ))}
     </div>)

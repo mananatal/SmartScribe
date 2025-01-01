@@ -1,71 +1,89 @@
-import React from 'react';
-import { motion } from "framer-motion";
+'use client'
+import React, { useState } from 'react';
 import Logo from '../Logo';
+import { Button } from '../ui/button';
+import { UserButton, useUser } from '@clerk/nextjs';
+import Link from 'next/link';
+import { IconLayoutDashboard } from '@tabler/icons-react';
 
-function Navbar() {
+
+function Navbar({handleSmoothScroll}) {
+    const [active,setActive]=useState(0);
+    const {user}=useUser();
+
+    const navItems=[
+        {
+            id:"home",
+            title:"Home"
+        },
+        {
+            id:"about",
+            title:"About Us"
+        },
+        {
+            id:"features",
+            title:"Features"
+        },
+        {
+            id:"working",
+            title:"How it Works"
+        },
+        {
+            id:"testimonials",
+            title:"Testimonials"
+        }
+    ]
+
+    const handleNavItemClick=(e,id,index)=>{
+        handleSmoothScroll(e, id);
+        setActive(index);
+    }
+
+
     return (
-        <nav className="bg-white border-gray-200 dark:bg-gray-900">
+        <nav className="bg-white border-gray-200 dark:bg-gray-900 relative  z-10">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <Logo />
                 <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-                    <button 
-                        type="button" 
-                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                        Get started
-                    </button>
-                    <button 
-                        data-collapse-toggle="navbar-cta" 
-                        type="button" 
-                        className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" 
-                        aria-controls="navbar-cta" 
-                        aria-expanded="false">
-                        <span className="sr-only">Open main menu</span>
-                        <svg 
-                            className="w-5 h-5" 
-                            aria-hidden="true" 
-                            xmlns="http://www.w3.org/2000/svg" 
-                            fill="none" 
-                            viewBox="0 0 17 14">
-                            <path 
-                                stroke="currentColor" 
-                                strokeLinecap="round" 
-                                strokeLinejoin="round" 
-                                strokeWidth="2" 
-                                d="M1 1h15M1 7h15M1 13h15" />
-                        </svg>
-                    </button>
+                    {
+                        !user && <Link href={'/sign-in'}>
+                            <Button 
+                                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                Get started
+                            </Button>
+                        </Link>
+                    }
+                     {
+                        user && 
+                        <div className='flex gap-2 items-center'>
+                            <Link href={'/dashboard'}>
+                                <Button 
+                                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                    <IconLayoutDashboard/>
+                                    Dashboard
+                                </Button>
+                            </Link>
+                            <UserButton/>
+                        </div>
+                    }
+                    
                 </div>
                 <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-cta">
                     <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                        <li>
-                            <a 
-                                href="#" 
-                                className="block py-2 px-3 md:p-0 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:dark:text-blue-500" 
-                                aria-current="page">
-                                Features
-                            </a>
-                        </li>
-                        <li>
-                            <a 
-                                href="#" 
-                                className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
-                                How it Works
-                            </a>
-                        </li>
-                        <li>
-                            <a 
-                                href="#" 
-                                className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
-                                Testimonials
-                            </a>
-                        </li>
-                        <li>
-                            <a 
-                                href="#" 
-                                className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
-                                About
-                            </a>
-                        </li>
+                        {
+                            navItems.map((item,index)=>(
+                                <li key={index}>
+                                    <Link 
+                                        href={`#${item.id}`}
+                                        className={`block py-2 px-3 md:p-0 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 ${active==index?"text-blue-700":"text-gray-900 "}`}
+                                        aria-current="page"
+                                        onClick={(e) => handleNavItemClick(e, `#${item.id}`,index)}    
+                                    >   
+                                        {item.title}
+                                    </Link>
+                                </li>
+                            ))
+                        }
                     </ul>
                 </div>
             </div>

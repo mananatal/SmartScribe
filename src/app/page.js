@@ -11,6 +11,7 @@ import { FeaturesSection } from "@/components/homePage/FeaturesSection";
 import TestimonialsSection from "@/components/homePage/TestimonialsSection";
 import { AboutUs } from "@/components/homePage/AboutUs";
 import HowItWorksSection from "@/components/homePage/HowItWorksSection";
+import Footer from "@/components/homePage/Footer";
 
 export default function Home() {
   const { user } = useUser();
@@ -30,56 +31,35 @@ export default function Home() {
 
   const handleSmoothScroll = (event, targetId) => {
     event.preventDefault();
+    console.log("Clicked")
     document.querySelector(targetId)?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
     <div className="min-h-screen">
       {/* Navbar */}
-      <Navbar/>
+      <Navbar handleSmoothScroll={handleSmoothScroll}/>
 
       {/* Hero Section */}
       <HeroSection/>
-      
+
+      {/* About Section */}
+        <AboutUs/>     
 
       {/* Features Section */}
       <FeaturesSection/>
 
-      {/* Testimonials Section */}
-      <TestimonialsSection/>
-      
-
-      {/* About Section */}
-      <AboutUs/>
       
       {/* How it works section */}
       <HowItWorksSection/>
 
+
+      {/* Testimonials Section */}
+      <TestimonialsSection/>
+      
+      
       {/* Footer */}
-      <footer className="bg-gradient-to-r from-gray-800 to-gray-900 text-white py-6 ">
-        <div className="container mx-auto text-center">
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            © 2024 SmartScribe. All rights reserved. ✨
-          </motion.p>
-          <motion.div
-            className="space-x-4 mt-2"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <a href="#privacy" className="hover:underline">
-              🔒 Privacy Policy
-            </a>
-            <a href="#terms" className="hover:underline">
-              ⚖️ Terms of Service
-            </a>
-          </motion.div>
-        </div>
-      </footer>
+      <Footer  handleSmoothScroll={handleSmoothScroll}/>
     </div>
   );
 }

@@ -1,25 +1,14 @@
 import { cn } from "@/lib/utils";
-import {
-  IconAdjustmentsBolt,
-  IconCloud,
-  IconCurrencyDollar,
-  IconEaseInOut,
-  IconGlobe,
-  IconHeart,
-  IconHelp,
-  IconLock,
-  IconRouteAltLeft,
-  IconTerminal2,
-} from "@tabler/icons-react";
+
 import { 
     IconUserCircle, 
     IconEdit, 
-    IconApi, 
     IconBrain, 
     IconLayout, 
     IconDashboard, 
-    IconSearch, 
-    IconUsers 
+    IconSearch,
+    IconGlobe,
+    IconLock, 
   } from '@tabler/icons-react';
   
 export function FeaturesSection() {
@@ -68,7 +57,7 @@ export function FeaturesSection() {
       
   return (
     <>
-    <div className="px-8">
+    <div id="features" className="px-8 mt-10">
         <h4 className="text-3xl lg:text-5xl lg:leading-tight max-w-5xl mx-auto text-center tracking-tight font-medium text-black dark:text-white">
         Packed with thousands of features
         </h4>
