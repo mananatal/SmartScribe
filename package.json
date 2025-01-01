@@ -1,5 +1,6 @@
 {
-  "name": "smart-scribe",
+  "name": "smart_scribe",
+  "author": "Manan Atal",
   "version": "0.1.0",
   "private": true,
   "scripts": {
