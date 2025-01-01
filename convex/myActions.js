@@ -19,7 +19,7 @@ export const ingest = action({
         model: "text-embedding-004", // 768 dimensions
         taskType: TaskType.RETRIEVAL_DOCUMENT,
         title: "Document title",
-        apiKey:apiKey
+        apiKey:"AIzaSyDfkn-frxeR5VMEaDv2WUvYqsAC9LInRGI",
       }),
       { ctx }
     );
@@ -36,7 +36,7 @@ export const search = action({
             model: "text-embedding-004", // 768 dimensions
             taskType: TaskType.RETRIEVAL_DOCUMENT,
             title: "Document title",
-            apiKey:apiKey,
+            apiKey:"AIzaSyDfkn-frxeR5VMEaDv2WUvYqsAC9LInRGI",
       }), { ctx });
 
       const resultOne =  (await vectorStore.similaritySearch(args.query, 1)).filter((q) => q.metadata.fileId == args.fileId);
