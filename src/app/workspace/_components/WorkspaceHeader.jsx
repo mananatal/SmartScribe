@@ -15,7 +15,7 @@ function WorkspaceHeader({fileName}) {
                     </Button>
                 </Link>
                 {/* logo */}
-                <Link href="#" className="md:flex items-center gap-2 hidden ">
+                <Link href="/dashboard" className="md:flex items-center gap-2 hidden ">
                     <div className="flex aspect-square size-8 items-center justify-center rounded-lg text-sidebar-primary-foreground">
                         <NotebookPen className="h-6 w-6 text-blue-600" />
                     </div>

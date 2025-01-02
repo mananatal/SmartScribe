@@ -31,7 +31,6 @@ export default function Home() {
 
   const handleSmoothScroll = (event, targetId) => {
     event.preventDefault();
-    console.log("Clicked")
     document.querySelector(targetId)?.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -53,10 +52,8 @@ export default function Home() {
       {/* How it works section */}
       <HowItWorksSection/>
 
-
       {/* Testimonials Section */}
       <TestimonialsSection/>
-      
       
       {/* Footer */}
       <Footer  handleSmoothScroll={handleSmoothScroll}/>

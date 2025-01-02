@@ -80,10 +80,15 @@ function AppSidebar() {
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
-        <SidebarFooter className={"mb-8"}>
-          <Progress value={(pdfFiles?.length/5)*100} />
-          <div className="ml-1 font-semibold text-sm">{pdfFiles?.length} out of 5 PDF uploaded</div>
-          <div className="ml-1 opacity-80 text-sm mb-4">Upgrade to Upload more PDF</div>
+        <SidebarFooter className={"mb-8 "}>
+          {
+            !isPrime &&
+            <div>
+              <Progress value={(pdfFiles?.length/5)*100} />
+              <div className="ml-1 font-semibold text-sm">{pdfFiles?.length} out of 5 PDF uploaded</div>
+              <div className="ml-1 opacity-80 text-sm mb-4">Upgrade to Upload more PDF</div>
+            </div>
+          }
           <NavUser/>
         </SidebarFooter>
       </Sidebar>

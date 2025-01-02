@@ -4,9 +4,9 @@ import { Loader2Icon } from 'lucide-react';
 
 function PdfViewer({fileUrl}) {
   return (
-    <div>
+    <div >
       {fileUrl === undefined ? (
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex  justify-center items-center h-screen sm:w-full">
           <Loader2Icon className="animate-spin " />
         </div>
       ) : (

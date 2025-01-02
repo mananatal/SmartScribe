@@ -15,7 +15,7 @@ function WorkspacePage({params}) {
   return (
     <div>
         <WorkspaceHeader fileName={fileInfo && fileInfo[0].fileName}/>
-        <div className='grid grid-cols-2 gap-2'>
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-2'>
             <div>
                 <TextEditor fileId={fileId}/>
             </div>

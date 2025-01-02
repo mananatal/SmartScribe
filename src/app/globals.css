@@ -225,3 +225,33 @@ body {
     display: none;  /* Chrome, Safari and Opera */
   }
 }
+
+
+
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: #afb2bf;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #000814;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #afb2bf;
+  border-radius: 10px;
+  visibility: hidden;
+}
+
+*:active::-webkit-scrollbar-thumb,
+*:focus::-webkit-scrollbar-thumb,
+*:hover::-webkit-scrollbar-thumb {
+  visibility: visible;
+}

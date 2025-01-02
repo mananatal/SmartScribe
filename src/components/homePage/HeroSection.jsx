@@ -1,5 +1,8 @@
 import React from 'react'
 import { BackgroundLines } from '../ui/background-lines'
+import { Button } from '../ui/button'
+import Link from 'next/link'
+
 
 function HeroSection() {
   return (
@@ -10,8 +13,15 @@ function HeroSection() {
       <p className="max-w-xl mx-auto text-sm md:text-lg text-neutral-700 dark:text-neutral-400 text-center">
             Turn your PDFs into living documents. Ask questions, summarize chapters, and explore concepts instantly. Learning has never been this intelligent.
       </p>
+      <Link href={'/sign-up'} className='mt-4 relative z-10'>
+        <Button className="shadow-[0_4px_14px_0_rgb(0,118,255,39%)] hover:shadow-[0_6px_20px_rgba(0,118,255,23%)] hover:bg-[rgba(0,118,255,0.9)] px-8 py-2 bg-[#0070f3] rounded-md text-white font-light transition duration-200 ease-linear">
+          Start Learning Smarter Today!
+        </Button>
+      </Link>
+      
     </BackgroundLines>
   )
 }
 
 export default HeroSection
+

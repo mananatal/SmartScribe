@@ -106,9 +106,9 @@ function UploadPdf({ children,isUploadLimitReached }) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger disabled={isUploadLimitReached} asChild>{children}</DialogTrigger>
-            <DialogContent>
+            <DialogContent >
                 <DialogHeader>
-                    <DialogTitle className="text-base sm:text-lg md:text-xl">Upload PDF</DialogTitle>
+                    <DialogTitle className="text-base sm:text-lg md:text-xl" >Upload PDF</DialogTitle>
                     <div className="flex flex-col gap-3 sm:gap-4 mt-2">
                         <h2 className="text-sm sm:text-base">Select a file to upload</h2>
                         <div className="w-full">
