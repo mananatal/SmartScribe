@@ -2,6 +2,7 @@ import React from 'react'
 import {
     Bold,
     Code,
+    Download,
     Heading1,
     Heading2,
     Heading3,
@@ -11,12 +12,14 @@ import {
     Sparkles,
     Strikethrough,
   } from "lucide-react";
-import { useAction, useMutation } from 'convex/react';
+import { useAction, useMutation, useQuery } from 'convex/react';
 import { api } from '../../../../convex/_generated/api';
 import { useParams } from 'next/navigation';
 import { chatSession } from '@/config/gemeni';
 import { toast } from "sonner"
 import { useUser } from '@clerk/nextjs';
+import html2pdf from 'html2pdf.js';
+
 
 function EditorElements({editor}) {
     if (!editor) {
@@ -25,8 +28,9 @@ function EditorElements({editor}) {
 
     const searchVectors=useAction(api.myActions.search);
     const saveNotes=useMutation(api.notes.saveNotes);
-
+  
     const {fileId}=useParams(); 
+    const fileInfo=useQuery(api.fileStorage.getFileInfo,{fileId});
     const {user}=useUser();
 
     const onAIAssist=async ()=>{
@@ -66,12 +70,25 @@ function EditorElements({editor}) {
         
     }
 
-
+    const handleDownload = () => {
+        if(!editor ||!editor.getHTML() ||!fileInfo){
+            return;
+        }
+        const element = editor.getHTML();
+        const options = {
+            margin: [10, 30, 10, 30], 
+            filename: `${fileInfo[0].fileName} Notes.pdf`,
+            html2canvas: { scale: 2 }, 
+            jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' },
+        };
+        html2pdf().set(options).from(element).save();
+        toast("Notes Downloaded Successfully");
+    };
    
     
     return (
         <div className="control-group p-2 sm:p-5">
-            <div className="button-group flex flex-wrap gap-2 sm:gap-4 items-center justify-start">
+            <div className="Button-group flex flex-wrap gap-2 sm:gap-4 items-center justify-start">
                 <button                     
                     onClick={() =>
                         editor.chain().focus().toggleHeading({ level: 1 }).run()
@@ -146,6 +163,12 @@ function EditorElements({editor}) {
                     onClick={onAIAssist}
                 >
                     <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
+                </button>
+                <button
+                    onClick={handleDownload}
+                    className="p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors hover:text-blue-500"
+                >
+                    <Download className="w-4 h-4 sm:w-5 sm:h-5"/>
                 </button>
             </div>
         </div>
