@@ -19,6 +19,15 @@ import { chatSession } from '@/config/gemeni';
 import { toast } from "sonner"
 import { useUser } from '@clerk/nextjs';
 import html2pdf from 'html2pdf.js';
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
+  
+
+  
 
 
 function EditorElements({editor}) {
@@ -84,92 +93,98 @@ function EditorElements({editor}) {
         html2pdf().set(options).from(element).save();
         toast("Notes Downloaded Successfully");
     };
+
+    const editorEle = [
+        {
+            onclick: () => editor.chain().focus().toggleHeading({ level: 1 }).run(),
+            icon: Heading1,
+            tooltip: "Heading 1",
+            class: `p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors ${editor.isActive("heading", { level: 1 }) ? "is-active text-blue-500" : ""}`,
+        },
+        {
+            onclick: () => editor.chain().focus().toggleHeading({ level: 2 }).run(),
+            icon: Heading2,
+            tooltip: "Heading 2",
+            class: `p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors ${editor.isActive("heading", { level: 2 }) ? "is-active text-blue-500" : ""}`,
+        },
+        {
+            onclick: () => editor.chain().focus().toggleHeading({ level: 3 }).run(),
+            icon: Heading3,
+            tooltip: "Heading 3",
+            class: `p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors ${editor.isActive("heading", { level: 3 }) ? "is-active text-blue-500" : ""}`,
+        },
+        {
+            onclick: () => editor.chain().focus().toggleBold().run(),
+            icon: Bold,
+            tooltip: "Bold",
+            class: `p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors ${editor.isActive("bold") ? "is-active text-blue-500" : ""}`,
+        },
+        {
+            onclick: () => editor.chain().focus().toggleItalic().run(),
+            icon: Italic,
+            tooltip: "Italic",
+            class: `p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors ${editor.isActive("italic") ? "is-active text-blue-500" : ""}`,
+        },
+        {
+            onclick: () => editor.chain().focus().toggleStrike().run(),
+            icon: Strikethrough,
+            tooltip: "Strikethrough",
+            class: `p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors ${editor.isActive("strike") ? "is-active text-blue-500" : ""}`,
+        },
+        {
+            onclick: () => editor.chain().focus().toggleHighlight().run(),
+            icon: Highlighter,
+            tooltip: "Highlight",
+            class: `p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors ${editor.isActive("highlight") ? "is-active text-blue-500" : ""}`,
+        },
+        {
+            onclick: () => editor.chain().focus().toggleBulletList().run(),
+            icon: List,
+            tooltip: "Bullet List",
+            class: `p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors ${editor.isActive("bulletList") ? "is-active text-blue-500" : ""}`,
+        },
+        {
+            onclick: () => editor.chain().focus().toggleCodeBlock().run(),
+            icon: Code,
+            tooltip: "Code Block",
+            class: `p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors ${editor.isActive("codeBlock") ? "is-active text-blue-500" : ""}`,
+        },
+        {
+            onclick: onAIAssist,
+            icon: Sparkles,
+            tooltip: "AI Assist",
+            class: "p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors hover:text-blue-500",
+        },
+        {
+            onclick: handleDownload,
+            icon: Download,
+            tooltip: "Download",
+            class: "p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors hover:text-blue-500",
+        },
+    ];
+    
    
     
     return (
         <div className="control-group p-2 sm:p-5">
             <div className="Button-group flex flex-wrap gap-2 sm:gap-4 items-center justify-start">
-                <button                     
-                    onClick={() =>
-                        editor.chain().focus().toggleHeading({ level: 1 }).run()
-                    }
-                    className={`p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors ${editor.isActive("heading", { level: 1 }) ? "is-active text-blue-500" : ""
-                        }`}
-                >
-                    <Heading1 className="w-4 h-4 sm:w-5 sm:h-5" />
-                </button>
-                <button
-                    onClick={() =>
-                        editor.chain().focus().toggleHeading({ level: 2 }).run()
-                    }
-                    className={`p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors ${editor.isActive("heading", { level: 2 }) ? "is-active text-blue-500" : ""
-                        }`}
-                >
-                    <Heading2 className="w-4 h-4 sm:w-5 sm:h-5" />
-                </button>
-                <button
-                    onClick={() =>
-                        editor.chain().focus().toggleHeading({ level: 3 }).run()
-                    }
-                    className={`p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors ${editor.isActive("heading", { level: 3 }) ? "is-active text-blue-500" : ""
-                        }`}
-                >
-                    <Heading3 className="w-4 h-4 sm:w-5 sm:h-5" />
-                </button>
-                <button
-                    onClick={() => editor.chain().focus().toggleBold().run()}
-                    className={`p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors ${editor.isActive("bold") ? "is-active text-blue-500" : ""
-                        }`}
-                >
-                    <Bold className="w-4 h-4 sm:w-5 sm:h-5" />
-                </button>
-                <button
-                    onClick={() => editor.chain().focus().toggleItalic().run()}
-                    className={`p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors ${editor.isActive("italic") ? "is-active text-blue-500" : ""
-                        }`}
-                >
-                    <Italic className="w-4 h-4 sm:w-5 sm:h-5" />
-                </button>
-                <button
-                    onClick={() => editor.chain().focus().toggleStrike().run()}
-                    className={`p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors ${editor.isActive("strike") ? "is-active text-blue-500" : ""
-                        }`}
-                >
-                    <Strikethrough className="w-4 h-4 sm:w-5 sm:h-5" />
-                </button>
-                <button
-                    onClick={() => editor.chain().focus().toggleHighlight().run()}
-                    className={`p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors ${editor.isActive("highlight") ? "is-active text-blue-500" : ""
-                        }`}
-                >
-                    <Highlighter className="w-4 h-4 sm:w-5 sm:h-5" />
-                </button>
-                <button
-                    onClick={() => editor.chain().focus().toggleBulletList().run()}
-                    className={`p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors ${editor.isActive("bulletList") ? "is-active text-blue-500" : ""
-                        }`}
-                >
-                    <List className="w-4 h-4 sm:w-5 sm:h-5" />
-                </button>
-                <button
-                    onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-                    className={`p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors ${editor.isActive("codeBlock") ? "is-active text-blue-500" : ""
-                        }`}
-                >
-                    <Code className="w-4 h-4 sm:w-5 sm:h-5" />
-                </button>
-                <button
-                    className="p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors hover:text-blue-500"
-                    onClick={onAIAssist}
-                >
-                    <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
-                </button>
-                <button
-                    onClick={handleDownload}
-                    className="p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors hover:text-blue-500"
-                >
-                    <Download className="w-4 h-4 sm:w-5 sm:h-5"/>
-                </button>
+                {
+                    editorEle.map((element, index) => (
+                        <Tooltip key={index}>
+                            <TooltipTrigger asChild>
+                                <button
+                                    onClick={element.onclick}
+                                    className={element.class}
+                                >
+                                    <element.icon className="w-4 h-4 sm:w-5 sm:h-5" />
+                                </button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p>{element.tooltip}</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    ))
+                }
             </div>
         </div>
     )

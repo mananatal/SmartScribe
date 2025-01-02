@@ -1,3 +1,4 @@
+import { ChevronRight } from "lucide-react";
 import React from "react";
 
 function HowItWorksSection() {
@@ -13,7 +14,7 @@ const steps = [
         id: 2,
         title: "Ask Questions",
         description:
-            "Type your questions about the PDF content in natural language.",
+            "Write your question about the PDF content, select it, and then press the AI Assist button to get answer.",
     },
     {
         id: 3,
@@ -38,7 +39,7 @@ return (
             <div className="flex w-full flex-col items-center justify-between gap-y-10 lg:flex-row lg:gap-x-8 lg:gap-y-0 xl:gap-x-10">
                 {
                     steps.map((step) => (
-                        <div className="flex" key={step.id}>
+                        <div className="flex  items-center" key={step.id}>
                             <div className="flex items-start gap-4">
                                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-solid border-purple-blue-500 bg-transparent text-purple-blue-500">
                                     <span className="text-base font-bold leading-7">{step.id}</span>
@@ -47,7 +48,7 @@ return (
                                     <h3 className="mb-2 text-base font-bold leading-tight text-dark-grey-900">
                                         {step.title}
                                     </h3>
-                                    <p className="text-sm text-neutral-600 dark:text-neutral-300  relative z-10 ">
+                                    <p className="text-sm max-w-sm text-neutral-600 dark:text-neutral-300  relative z-10 ">
                                         {step.description}
                                     </p>
                                 </div>
@@ -55,18 +56,7 @@ return (
                             {
                                 step.id != 3 &&
                                 <div className="rotate-90 lg:rotate-0">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="43"
-                                        height="42"
-                                        viewBox="0 0 43 42"
-                                        fill="none"
-                                    >
-                                        <path
-                                            d="M16.9242 11.7425C16.2417 12.425 16.2417 13.5275 16.9242 14.21L23.7142 21L16.9242 27.79C16.2417 28.4725 16.2417 29.575 16.9242 30.2575C17.6067 30.94 18.7092 30.94 19.3917 30.2575L27.4242 22.225C28.1067 21.5425 28.1067 20.44 27.4242 19.7575L19.3917 11.725C18.7267 11.06 17.6067 11.06 16.9242 11.7425Z"
-                                            fill="#68769F"
-                                        />
-                                    </svg>
+                                    <ChevronRight className="h-12 w-12 text-neutral-600"/>
                                 </div>
                             }
                         </div>

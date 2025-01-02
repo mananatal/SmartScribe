@@ -7,6 +7,7 @@ import Highlight from '@tiptap/extension-highlight'
 import { useMutation, useQuery } from 'convex/react'
 import { api } from '../../../../convex/_generated/api'
 import { useUser } from '@clerk/nextjs'
+import { TooltipProvider } from '@/components/ui/tooltip'
 
 function TextEditor({fileId}) {
 
@@ -57,7 +58,9 @@ function TextEditor({fileId}) {
     return (
         <div className="scrollbar-hide">
             <div>
-                <EditorElements editor={editor} />
+                <TooltipProvider>
+                    <EditorElements editor={editor} />
+                </TooltipProvider>
             </div>
             <div className="h-[88vh] overflow-y-auto scrollbar-hide">
                 <EditorContent editor={editor} />
