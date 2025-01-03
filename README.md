@@ -14,6 +14,7 @@ SmartScribe is an AI-powered PDF note-taking application that revolutionizes the
 6. **Comprehensive Dashboard**: Manage everything from a single intuitive dashboard.
 7. **AI-Powered Search**: Find what you need quickly with intelligent, context-aware search capabilities.
 8. **Multi-language Support**: Support for multiple languages, allowing users to interact in their preferred language.
+9. **Download Notes as PDF**: Easily save your notes by downloading them as PDF files, ensuring convenient access and offline availability.
 
 
 
