@@ -1,10 +1,9 @@
 "use client";
 
-import { useMutation } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { useUser } from "@clerk/nextjs";
 import { useEffect } from "react";
-import { motion } from "framer-motion";
 import Navbar from "@/components/homePage/Navbar";
 import HeroSection from "@/components/homePage/HeroSection";
 import { FeaturesSection } from "@/components/homePage/FeaturesSection";
@@ -26,7 +25,15 @@ export default function Home() {
   };
 
   useEffect(() => {
-    user && checkUser();
+    if(user){
+      checkUser();
+      const u={
+        email: user.primaryEmailAddress.emailAddress,
+        userName: user.fullName,
+        imageUrl: user.imageUrl,
+      }
+      localStorage.setItem("user",JSON.stringify(u));
+    }
   }, [user]);
 
   const handleSmoothScroll = (event, targetId) => {

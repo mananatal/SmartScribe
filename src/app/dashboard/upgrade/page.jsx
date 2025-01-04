@@ -1,7 +1,7 @@
 'use client'
 
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
-import { useMutation } from 'convex/react';
+import { useMutation, useQuery } from 'convex/react';
 import React from 'react'
 import { api } from '../../../../convex/_generated/api';
 import { useUser } from '@clerk/nextjs';
@@ -10,9 +10,10 @@ import { useRouter } from 'next/navigation';
 import { Loader2Icon } from 'lucide-react';
 
 function UpgradePage() {
+  const user=JSON.parse(localStorage.getItem("user"));
   const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
   const upgradeUser = useMutation(api.user.upgradeUserPlan);
-  const { user } = useUser();
+  const isPrime=useQuery(api.user.fetchUserPlan,{email:user.email});
   const router = useRouter();
 
   const onCreateOrder = (data, actions) => {
@@ -30,12 +31,13 @@ function UpgradePage() {
 
   const onApproveOrder =async () => {
       await upgradeUser({
-        email: user?.primaryEmailAddress?.emailAddress
+        email: user?.email
       })
       toast("Plan Upgraded Successfully")
       router.replace("/dashboard")
   }
-
+  
+  
 
   return (
     <div className="p-10">
@@ -134,19 +136,31 @@ function UpgradePage() {
                 <span className="text-gray-700"> Help center access </span>
               </li>
             </ul>
-            <div className="mt-4">
-              {isPending ? <Loader2Icon className='animate-spin h-4 w-4'/> : (
-                <>
-                  
-                  <PayPalButtons
-                    style={{ layout: "vertical" }}
-                    createOrder={(data, actions) => onCreateOrder(data, actions)}
-                    onApprove={()=>onApproveOrder()}
-                    onCancel={()=>toast("OOPS! Something went Wrong")}
-                  />
-                </>
-              )}
-            </div>
+            {
+              !isPrime && 
+              <div className="mt-4">
+                {isPending ? <Loader2Icon className='animate-spin h-4 w-4' /> : (
+                  <>
+
+                    <PayPalButtons
+                      style={{ layout: "vertical" }}
+                      createOrder={(data, actions) => onCreateOrder(data, actions)}
+                      onApprove={() => onApproveOrder()}
+                      onCancel={() => toast("OOPS! Something went Wrong")}
+                    />
+                  </>
+                )}
+              </div>
+            }
+            {
+              isPrime && 
+              <button
+                 className="mt-4 mx-auto block rounded-full border border-indigo-600 bg-indigo-600 px-10 py-3 text-center text-sm font-medium text-white hover:bg-indigo-700 hover:ring-1 hover:ring-indigo-700 focus:outline-none focus:ring active:text-indigo-500"
+                 disabled={true}
+              >
+                Current Plan
+              </button>
+            }
           </div>
 
           <div className="rounded-2xl border border-gray-200 p-6 shadow-sm sm:px-8 lg:p-12">
