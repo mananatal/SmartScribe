@@ -2,7 +2,7 @@
 
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import { useMutation, useQuery } from 'convex/react';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { api } from '../../../../convex/_generated/api';
 import { useUser } from '@clerk/nextjs';
 import { toast } from 'sonner';
@@ -11,14 +11,16 @@ import { Loader2Icon } from 'lucide-react';
 
 function UpgradePage() {
   let user;
-  if(typeof window !== "undefined"){
+ 
+  if(typeof window !="undefined"){
     user=JSON.parse(localStorage.getItem("user"));
-
   }
+ 
   const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
   const upgradeUser = useMutation(api.user.upgradeUserPlan);
-  const isPrime=useQuery(api.user.fetchUserPlan,{email:user.email});
+  const isPrime=user && useQuery(api.user.fetchUserPlan,{email:user?.email});
   const router = useRouter();
+
 
   const onCreateOrder = (data, actions) => {
     return actions?.order?.create({
