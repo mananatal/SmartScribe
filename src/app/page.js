@@ -32,7 +32,9 @@ export default function Home() {
         userName: user.fullName,
         imageUrl: user.imageUrl,
       }
-      localStorage.setItem("user",JSON.stringify(u));
+      if(typeof window !== "undefined"){
+        localStorage.setItem("user",JSON.stringify(u));
+      }
     }
   }, [user]);
 

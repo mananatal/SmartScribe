@@ -10,7 +10,11 @@ import { useRouter } from 'next/navigation';
 import { Loader2Icon } from 'lucide-react';
 
 function UpgradePage() {
-  const user=JSON.parse(localStorage.getItem("user"));
+  let user;
+  if(typeof window !== "undefined"){
+    user=JSON.parse(localStorage.getItem("user"));
+
+  }
   const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
   const upgradeUser = useMutation(api.user.upgradeUserPlan);
   const isPrime=useQuery(api.user.fetchUserPlan,{email:user.email});
