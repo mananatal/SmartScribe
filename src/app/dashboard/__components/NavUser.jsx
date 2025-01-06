@@ -89,9 +89,9 @@ export function NavUser() {
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
-                        <SignOutButton>
+                        <SignOutButton redirectUrl="/">
                             <DropdownMenuItem >
-                                <LogOut />
+                                <LogOut  />
                                 Log out
                             </DropdownMenuItem>
                         </SignOutButton>
