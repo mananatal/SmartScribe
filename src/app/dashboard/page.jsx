@@ -11,6 +11,26 @@ function Dashboard() {
   const {user}=useUser();
   const pdfFiles =useQuery(api.fileStorage.getUserPdf,{email:user?.primaryEmailAddress?.emailAddress})
 
+   const checkUser = async () => {
+      await createUser({
+        email: user?.primaryEmailAddress?.emailAddress,
+        userName: user?.fullName,
+        imageUrl: user?.imageUrl,
+      });
+    };
+  
+    useEffect(() => {
+      if(user){
+        checkUser();
+        const u={
+          email: user.primaryEmailAddress.emailAddress,
+          userName: user.fullName,
+          imageUrl: user.imageUrl,
+        }
+          localStorage.setItem("user",JSON.stringify(u));
+      }
+    }, [user]);
+
   const isLoading = pdfFiles === undefined;
   return (
     <div className="p-4 sm:p-8 md:p-12">
