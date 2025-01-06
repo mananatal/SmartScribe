@@ -1,8 +1,8 @@
 'use client'
 
 import { useUser } from '@clerk/nextjs'
-import { useQuery } from 'convex/react';
-import React, {  useState } from 'react'
+import { useMutation, useQuery } from 'convex/react';
+import React, {  useEffect } from 'react'
 import { api } from '../../../convex/_generated/api';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -10,7 +10,7 @@ import Image from 'next/image';
 function Dashboard() {
   const {user}=useUser();
   const pdfFiles =useQuery(api.fileStorage.getUserPdf,{email:user?.primaryEmailAddress?.emailAddress})
-
+  const createUser = useMutation(api.user.createUser);
    const checkUser = async () => {
       await createUser({
         email: user?.primaryEmailAddress?.emailAddress,
