@@ -1,7 +1,6 @@
 import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
-import User from '@/models/user.model'
 import { api } from '../../../../convex/_generated/api'
 import { fetchMutation } from "convex/nextjs";
 
