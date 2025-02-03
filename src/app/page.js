@@ -1,7 +1,6 @@
 "use client";
 
-import { useMutation, useQuery } from "convex/react";
-import { api } from "../../convex/_generated/api";
+
 import { useUser } from "@clerk/nextjs";
 import { useEffect } from "react";
 import Navbar from "@/components/homePage/Navbar";
@@ -14,19 +13,10 @@ import Footer from "@/components/homePage/Footer";
 
 export default function Home() {
   const { user } = useUser();
-  const createUser = useMutation(api.user.createUser);
 
-  const checkUser = async () => {
-    await createUser({
-      email: user?.primaryEmailAddress?.emailAddress,
-      userName: user?.fullName,
-      imageUrl: user?.imageUrl,
-    });
-  };
 
   useEffect(() => {
     if(user){
-      checkUser();
       const u={
         email: user.primaryEmailAddress.emailAddress,
         userName: user.fullName,

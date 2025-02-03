@@ -9,19 +9,10 @@ import Image from 'next/image';
 
 function Dashboard() {
   const {user}=useUser();
-  const pdfFiles =useQuery(api.fileStorage.getUserPdf,{email:user?.primaryEmailAddress?.emailAddress})
-  const createUser = useMutation(api.user.createUser);
-   const checkUser = async () => {
-      await createUser({
-        email: user?.primaryEmailAddress?.emailAddress,
-        userName: user?.fullName,
-        imageUrl: user?.imageUrl,
-      });
-    };
+  const pdfFiles =useQuery(api.fileStorage.getUserPdf,{email:user?.primaryEmailAddress?.emailAddress});
   
     useEffect(() => {
       if(user){
-        checkUser();
         const u={
           email: user.primaryEmailAddress.emailAddress,
           userName: user.fullName,
